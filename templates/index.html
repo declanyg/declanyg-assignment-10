@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assignment 10</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <h3>Text to Image Search</h3>
+    <form method="POST" action="/text_to_img">
+      <label for="text_input">Enter Text:</label>
+      <input type="text" name="text_input" required />
+      <button type="submit">Search</button>
+    </form>
+    <h3>Image to Image Search</h3>
+    <form method="POST" action="/image_to_img" enctype="multipart/form-data">
+      <label for="file">Choose an image:</label>
+      <input type="file" name="image_input" accept="image/*" required />
+      <button type="submit">Submit Image</button>
+    </form>
+    <h3>Hybrid Text and Image to Image Search</h3>
+    <form method="POST" action="/hybrid_query" enctype="multipart/form-data">
+      <label for="image_input">Choose Image:</label>
+      <input type="file" name="image_input" accept="image/*" required /><br />
+      <label for="text_input">Enter Text:</label>
+      <input type="text" name="text_input" required /><br />
+      <button type="submit">Submit</button>
+    </form>
+    <h3>Image to Image with First K Principle Components</h3>
+    <form
+      method="POST"
+      action="/pca_image_to_image"
+      enctype="multipart/form-data"
+    >
+      <label for="image_input">Choose Image:</label>
+      <input type="file" name="image_input" accept="image/*" required /><br />
+
+      <label for="k_value">Number of Principal Components (k):</label>
+      <input
+        type="number"
+        name="text_input"
+        min="1"
+        value="50"
+        required
+      /><br />
+
+      <button type="submit">Submit</button>
+    </form>
+
+    {% if results %}
+    <h2>Top 5 Similar Images</h2>
+    {% for path, score in results %}
+    <img src="{{ path }}" alt="Image" width="200" />
+    <p>Similarity: {{ score }}</p>
+    {% endfor %} {% endif %}
+
+    <script src="/static/script.js"></script>
+  </body>
+</html>
